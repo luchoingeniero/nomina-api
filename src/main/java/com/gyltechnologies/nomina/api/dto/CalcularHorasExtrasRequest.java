@@ -19,5 +19,8 @@ public class CalcularHorasExtrasRequest {
 	private Integer horaInicio;
 	private Date fechaFin;
 	private Integer horaFin;
-	private Integer horasOrdinariasEncontradas;
+	@Builder.Default
+	private Integer horasOrdinariasEncontradas = 0;
+	@Builder.Default
+	private Boolean soloExtras = false ;
 }

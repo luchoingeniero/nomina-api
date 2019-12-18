@@ -1,6 +1,7 @@
 package com.gyltechnologies.nomina.api.model.entities;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Table(name="nom_configuracion_horas_extras")
 @Getter
 @Setter
-public class TipoHorasExtrasEntity {
+public class TipoHorasExtrasEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

@@ -1,5 +1,6 @@
 package com.gyltechnologies.nomina.api.model.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Table(name="nom_configuracion_dias_festivos")
 @Getter
 @Setter
-public class FestivosEntity {
+public class FestivosEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
