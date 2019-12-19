@@ -23,4 +23,5 @@ public class CalcularHorasExtrasRequest {
 	private Integer horasOrdinariasEncontradas = 0;
 	@Builder.Default
 	private Boolean soloExtras = false ;
+	private String tipoDia;
 }

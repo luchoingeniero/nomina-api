@@ -29,8 +29,8 @@ public class TestController {
 	@GetMapping("/listar")
 	public List<TipoHorasExtrasEntity> list() throws ParseException{
 		CalcularHorasExtrasRequest req = CalcularHorasExtrasRequest.builder()
-				.fechaInicio(new SimpleDateFormat("dd/MM/yyyy").parse("10/12/2019"))
-				.fechaFin(new SimpleDateFormat("dd/MM/yyyy").parse("11/12/2019"))
+				.fechaInicio(new SimpleDateFormat("dd/MM/yyyy").parse("14/12/2019"))
+				.fechaFin(new SimpleDateFormat("dd/MM/yyyy").parse("15/12/2019"))
 				.horaInicio(17)
 				.horaFin(2)
 				.soloExtras(true)
