@@ -1,0 +1,1 @@
+nssm install nomina-api "C:\Program Files\Java\jre1.8.0_211\bin\java.exe" "-jar D:\nomina-app\nomina-api\build\libs\nomina-0.0.1-SNAPSHOT.jar"
