@@ -3,6 +3,8 @@ package com.gyltechnologies.nomina.api.request;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,16 +15,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CalcularHorasExtrasRequest {
-	@NotBlank
+	@NotNull(message = "Fecha de Inicio es obligatoria")
 	private Date fechaInicio;
 	
-	@NotBlank
+	@NotNull(message = "Hora Inicio es obligatoria")
 	private Integer horaInicio;
 	
-	@NotBlank
+	@NotNull(message = "Fecha Final es obligatoria")
 	private Date fechaFin;
 	
-	@NotBlank
+	@NotNull(message = "Hora Final es obligatoria")
 	private Integer horaFin;
 	
 	private Boolean soloExtras = false ;
