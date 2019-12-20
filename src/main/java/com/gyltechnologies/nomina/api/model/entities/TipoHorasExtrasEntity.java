@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +24,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TipoHorasExtrasEntity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -32,7 +38,8 @@ public class TipoHorasExtrasEntity implements Serializable {
 	private String tipoHora;
 	
 	private int porcentaje;
-	@OneToMany(mappedBy = "tipoHorasExtrasEntity", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "tipoHorasExtrasEntity", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<TipoHorasExtrasDetalleEntity> detalle;
 
 }

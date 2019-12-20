@@ -13,7 +13,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CalcularHorasExtrasRequest {
+public class CalcularHorasExtrasDTO {
 
 	private Date fechaInicio;
 	private Integer horaInicio;

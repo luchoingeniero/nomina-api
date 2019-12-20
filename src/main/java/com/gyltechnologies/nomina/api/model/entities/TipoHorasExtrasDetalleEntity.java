@@ -22,12 +22,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TipoHorasExtrasDetalleEntity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nom_configuracion_horas_extras_id")
-    @JsonIgnore
 	private TipoHorasExtrasEntity tipoHorasExtrasEntity;
     @Column(name="hora_inicio")
 	private int horaInicio;

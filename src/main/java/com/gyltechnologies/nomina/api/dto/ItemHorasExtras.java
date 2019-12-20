@@ -1,8 +1,6 @@
 package com.gyltechnologies.nomina.api.dto;
 
-import java.util.Date;
 
-import com.gyltechnologies.nomina.api.dto.CalcularHorasExtrasRequest.CalcularHorasExtrasRequestBuilder;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +15,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ItemHorasExtras {
 
-	private String key;
-	private int cantidad;
+	private String dia;
+	private String tipoHora;
+	private Integer cantidad;
+	private Integer porcentaje;
 }

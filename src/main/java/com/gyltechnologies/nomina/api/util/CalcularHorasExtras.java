@@ -13,7 +13,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gyltechnologies.nomina.api.dto.CalcularHorasExtrasRequest;
+import com.gyltechnologies.nomina.api.dto.CalcularHorasExtrasDTO;
 import com.gyltechnologies.nomina.api.dto.ItemHorasExtras;
 import com.gyltechnologies.nomina.api.model.entities.FestivosEntity;
 import com.gyltechnologies.nomina.api.model.entities.TipoHorasExtrasDetalleEntity;
@@ -52,12 +52,12 @@ public class CalcularHorasExtras {
 	      .toLocalDate();
 	}
 	
-	public List<ItemHorasExtras> calcular(CalcularHorasExtrasRequest request){
+	public List<ItemHorasExtras> calcular(CalcularHorasExtrasDTO request){
 		//condicion si no es el mismo dia!!!
 		if(request.getFechaInicio().before(request.getFechaFin())) {
 			List<ItemHorasExtras> list = new ArrayList<>();
 						
-			CalcularHorasExtrasRequest req1 = CalcularHorasExtrasRequest
+			CalcularHorasExtrasDTO req1 = CalcularHorasExtrasDTO
 					.builder()
 					.fechaInicio(request.getFechaInicio())
 					.fechaFin(request.getFechaInicio())
@@ -69,7 +69,7 @@ public class CalcularHorasExtras {
 					.build();
 			list = this.calcularDetalle(req1);
 			
-			CalcularHorasExtrasRequest req2 = CalcularHorasExtrasRequest
+			CalcularHorasExtrasDTO req2 = CalcularHorasExtrasDTO
 					.builder()
 					.fechaInicio(request.getFechaFin())
 					.fechaFin(request.getFechaFin())
@@ -91,7 +91,7 @@ public class CalcularHorasExtras {
 		
 	}
 	
-	public List<ItemHorasExtras> calcularDetalle(CalcularHorasExtrasRequest request){
+	public List<ItemHorasExtras> calcularDetalle(CalcularHorasExtrasDTO request){
 		List<ItemHorasExtras> list = new ArrayList<>();
 		Integer horasTrabajadas = request.getHoraFin()-request.getHoraInicio();
 		if(!request.getSoloExtras()&&request.getHorasOrdinariasEncontradas()<HORAS_ORDINARIAS_MAX) {
@@ -104,12 +104,12 @@ public class CalcularHorasExtras {
 				
 				if( aplicarHoras>0 && request.getHorasOrdinariasEncontradas()+ aplicarHoras <= HORAS_ORDINARIAS_MAX) {
 					request.setHorasOrdinariasEncontradas(request.getHorasOrdinariasEncontradas()+aplicarHoras);
-					list.add(ItemHorasExtras.builder().key(item.getTipoHorasExtrasEntity().getDescripcion()).cantidad(aplicarHoras).build());
+					list.add(this.buildItemHorasExtras(item, aplicarHoras));
 					request.setHoraInicio(item.getHoraFinal());
 				}else if(request.getHorasOrdinariasEncontradas() + aplicarHoras > HORAS_ORDINARIAS_MAX) {
 					aplicarHoras = HORAS_ORDINARIAS_MAX - request.getHorasOrdinariasEncontradas();
 					request.setHorasOrdinariasEncontradas(request.getHorasOrdinariasEncontradas()+aplicarHoras);
-					list.add(ItemHorasExtras.builder().key(item.getTipoHorasExtrasEntity().getDescripcion()).cantidad(aplicarHoras).build());
+					list.add(this.buildItemHorasExtras(item, aplicarHoras));
 					request.setHoraInicio(request.getHoraInicio()+aplicarHoras);
 					break;
 				}
@@ -128,20 +128,22 @@ public class CalcularHorasExtras {
 			}
 			request.setHoraInicio(item.getHoraFinal());
 			if(aplicarHorasExtras>0) {
-				list.add(ItemHorasExtras.builder().key(item.getTipoHorasExtrasEntity().getDescripcion()).cantidad(aplicarHorasExtras).build());	
+				list.add(this.buildItemHorasExtras(item, aplicarHorasExtras));	
 			}
 			
 			
 		}
 		
-		
-		
-		System.out.println("Horas Trabajadas en el dia TipoDia("+request.getTipoDia()+")"+" "+request.getFechaInicio()+" "+horasTrabajadas);
-		list.forEach(item->{
-			System.out.println(item.getKey()+" "+item.getCantidad());
-		});
-		
-		
+				
 		return list;
+	}
+	
+	public ItemHorasExtras buildItemHorasExtras(TipoHorasExtrasDetalleEntity item,Integer cantidad) {
+		return ItemHorasExtras.builder()
+				.dia(item.getTipoHorasExtrasEntity().getTipo())
+				.tipoHora(item.getTipoHorasExtrasEntity().getDescripcion())
+				.cantidad(cantidad)
+				.porcentaje(item.getTipoHorasExtrasEntity().getPorcentaje())
+				.build();
 	}
 }
